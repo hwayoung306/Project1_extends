@@ -38,16 +38,16 @@
 	   }
 	   
 	// 게시판
-	   //PostDAO Postdao = new PostDAO();
-	   //ArrayList<PostVO> Postal = Postdao.PostList();
+	   PostDAO Postdao = new PostDAO();
+	   ArrayList<PostVO> Postal = Postdao.PostList();
 	   
 	// 질문
-	   //QuesDAO Qdao = new QuesDAO();
-	   //ArrayList<QuesVO> Qal = Qdao.QuesList();
+	   QuesDAO Qdao = new QuesDAO();
+	   ArrayList<QuesVO> Qal = Qdao.QuesList();
 	   
 	// 댓글
-	   //AnswerDAO Adao = new AnswerDAO();
-	   //ArrayList<AnswerVO> Aal = Adao.AnswerList();
+	   AnswerDAO Adao = new AnswerDAO();
+	   ArrayList<AnswerVO> Aal = Adao.AnswerList();
 	   %>
 
 		<!-- Wrapper -->
@@ -541,12 +541,15 @@
 				                        <td style="text-align: center; width : 20%">작성일</td>
 				                        <td  style="text-align: center; width : 15%">작성자</td>
 				                    </tr>
-				                    <tr>
-				                    	<td></td>
-				                    	<td><a href = "main.jsp#post_one"></a></td>
-				                    	<td></td>
-				                    	<td></td>
-				                    </tr>
+				                   
+				                	<% for(int i = 0, j = Postal.size(); i < Postal.size() ;i++, j--){ %>
+                        			<tr>
+                           				<td><%=j%></td>
+                           				<td><a onclick = "postDetail(<%= Postal.get(i).getPost_num() %>)"><%=Postal.get(i).getPost_name() %></a></td>
+                           				<td><%=Postal.get(i).getPost_date() %></td>
+                           				<td><%=Postal.get(i).getMem_id() %></td>
+                        			</tr>
+                     				<%} %>
 	                  			</table>
 	                  				
 	               				<!-- 글쓰기 버튼 -->
@@ -578,19 +581,19 @@
 	                  			<table>
 	                       	 		<tr>
 	                           			<td style="width: 20%;">글 제목</td>
-	                           			<td colspan="2"></td>
+	                           			<td id="post_detail_name" colspan="2"></td>
 	                        		</tr>
 	                        		<tr>
 	                           			<td>작성자</td>
-	                           			<td colspan="2"></td>
+	                           			<td id="post_detail_id" colspan="2"></td>
 	                        		</tr>
 	                        		<tr>
 			                           	<td>작성일자</td>
-			                           	<td colspan="2"></td>
+			                           	<td id="post_detail_date" colspan="2"></td>
 	                        		</tr>
 	                        		<tr>
 	                           			<td>내용</td>
-	                           			<td colspan="2" style="height: 200px; text-align: left;"></td>
+	                           			<td id="post_detail_cont" colspan="2" style="height: 200px; text-align: left;"></td>
 	                        		</tr>
 	                  			</table>
 	                  			<div style="text-align: right;"><button onclick="location.href='main.jsp#POST'">목록</button></div>
@@ -911,6 +914,7 @@
 		           });
 		        }
 		        
+		        
 		        /* 아두이노 통신 */
 		        $("#user_input").on('click',function(){
 		           	var mysensor = $("#mysensor").val();
@@ -927,6 +931,25 @@
 		      				}
 		      			});
 		      		});
+		        
+		        
+		        function postDetail(post_num) {
+					$.ajax({
+						type : "post", // 데이터 전송 방식
+						data : {"post_num" : post_num }, // 전송하는 데이터
+						url :  "PostDetail", // 데이터를 전송하는 페이지
+						dataType : "json", // 응답데이터의 형식
+						success : function(res) {
+							$("#post_detail_name").html(res.post_name);
+							$("#post_detail_id").html(res.mem_id);
+							$("#post_detail_date").html(res.post_date);
+							$("#post_detail_cont").html(res.post_cont);
+						},
+						 error : function() { // 실패
+				               alert("잠시후 다시 시도해주세요");
+				            }
+					})
+					}
 	       </script>
 
 	</body>

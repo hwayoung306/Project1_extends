@@ -28,9 +28,9 @@ public class PostDAO {
 			
 //			2. 데이터베이스 연결 객체 생성
 
-			String url="jdbc:oracle:thin:@project-db-stu.ddns.net:1524:xe";
-			String dbid="campus_b_2_1025";
-			String dbpw="smhrd2";
+			String url = "jdbc:oracle:thin:@localhost:1521:xe";
+			String dbid = "hr2";
+			String dbpw = "hr2";
 			
 			conn = DriverManager.getConnection(url,dbid,dbpw);
 		} catch (Exception e) {
@@ -99,7 +99,7 @@ public class PostDAO {
 		try {
 			connection();
 
-			String sql = "select * from post";
+			String sql = "select * from post order by post_num desc";
 			psmt = conn.prepareStatement(sql);
 			
 			rs = psmt.executeQuery();
@@ -128,29 +128,37 @@ public class PostDAO {
 		return al;
 	}
 	
-	
-	// 하나의 게시들을 보는 메소드
-	public PostVO getPost(int post_num) {
-		String sql = "select * from POST where POST_NUM = ?";
+	// 하나의 게시물을 보는 메소드
+	public PostVO getPost(String post_num) {
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, post_num);
-			
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				vo.setPost_num(rs.getInt(1));
-				vo.setPost_name(rs.getString(2));
-				vo.setPost_cont(rs.getString(3));
-				vo.setPost_date(rs.getString(4));
-				vo.setMem_id(rs.getString(5));	
+			connection();
+
+			String sql = "select * from POST where POST_NUM = ?";
+			psmt = conn.prepareStatement(sql);
+
+			psmt.setString(1, post_num);
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+
+				int get_post_num = rs.getInt(1);
+				String get_post_name = rs.getString(2);
+				String get_post_cont = rs.getString(3);
+				String get_post_date = rs.getString(4);
+				String get_post_mem_id = rs.getString(5);
+
+				vo = new PostVO(get_post_num,get_post_name,get_post_cont,get_post_date,get_post_mem_id);
 			}
-		}catch (Exception e) {
+
+		} catch (Exception e) {
+			System.out.println("신고 상세내역 DAO 실패");
 			e.printStackTrace();
+
+		} finally {
+			close();
 		}
 		return vo;
 	}
-	
-	
 	
 	
 	

@@ -25,9 +25,9 @@ public class valueDAO {
 			
 //			2. 데이터베이스 연결 객체 생성
 
-			String url="jdbc:oracle:thin:@project-db-stu.ddns.net:1524:xe";
-			String dbid="campus_b_2_1025";
-			String dbpw="smhrd2";
+			String url = "jdbc:oracle:thin:@localhost:1521:xe";
+			String dbid = "hr2";
+			String dbpw = "hr2";
 			
 			conn = DriverManager.getConnection(url,dbid,dbpw);
 		} catch (Exception e) {
