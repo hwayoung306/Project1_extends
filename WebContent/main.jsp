@@ -539,15 +539,15 @@
 				                    	<td style="text-align: center; width : 15%">번호</td>
 				                        <td style="text-align: center; width : 50%">제목</td>
 				                        <td style="text-align: center; width : 20%">작성일</td>
-				                        <td  style="text-align: center; width : 15%">작성자</td>
+				                        <td style="text-align: center; width : 15%">작성자</td>
 				                    </tr>
 				                   
 				                	<% for(int i = 0, j = Postal.size(); i < Postal.size() ;i++, j--){ %>
                         			<tr>
-                           				<td><%=j%></td>
+                           				<td align = "center"><%=j%></td>
                            				<td><a onclick = "postDetail(<%= Postal.get(i).getPost_num() %>)"><%=Postal.get(i).getPost_name() %></a></td>
-                           				<td><%=Postal.get(i).getPost_date() %></td>
-                           				<td><%=Postal.get(i).getMem_id() %></td>
+                           				<td ><%=Postal.get(i).getPost_date() %></td>
+                           				<td align = "center"><%=Postal.get(i).getMem_id() %></td>
                         			</tr>
                      				<%} %>
 	                  			</table>
@@ -940,6 +940,7 @@
 						url :  "PostDetail", // 데이터를 전송하는 페이지
 						dataType : "json", // 응답데이터의 형식
 						success : function(res) {
+							location.href = "main.jsp#post_one"
 							$("#post_detail_name").html(res.post_name);
 							$("#post_detail_id").html(res.mem_id);
 							$("#post_detail_date").html(res.post_date);

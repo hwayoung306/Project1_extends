@@ -63,7 +63,7 @@ public class RecipeDAO {
 
 			connection();
 
-			String sql = "insert into RECIPE values (REC_SEQ.NEXTVAL,?,?,?,?,?)";
+			String sql = "insert into RECIPE values (REC_NUM.NEXTVAL,?,?,?,?,?)";
 
 //			4. sql巩 角青按眉 (PreparedStatment)积己
 			psmt = conn.prepareStatement(sql);

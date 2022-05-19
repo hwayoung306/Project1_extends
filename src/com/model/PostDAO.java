@@ -71,7 +71,7 @@ public class PostDAO {
 				
 				connection();
 				
-				String sql = "insert into post values(POST_SEQ.NEXTVAL,?,?,sysdate,?)";
+				String sql = "insert into post values(POST_NUM.NEXTVAL,?,?,sysdate,?)";
 				psmt = conn.prepareStatement(sql);
 				
 				psmt.setString(1, post_name);
@@ -99,17 +99,17 @@ public class PostDAO {
 		try {
 			connection();
 
-			String sql = "select * from post order by post_num desc";
+			String sql = "select post_num, post_name, post_cont, to_char(post_date, 'YYYY-MM-DD'), mem_id from post order by post_num desc";
 			psmt = conn.prepareStatement(sql);
 			
 			rs = psmt.executeQuery();
 
 			while (rs.next()) {
-				int get_post_num = rs.getInt("post_num");
-				String get_post_name = rs.getNString("post_name");
-				String get_post_cont = rs.getNString("post_cont");
-				String get_post_date = rs.getNString("post_date");
-				String get_mem_id = rs.getNString("mem_id");
+				int get_post_num = rs.getInt(1);
+				String get_post_name = rs.getNString(2);
+				String get_post_cont = rs.getNString(3);
+				String get_post_date = rs.getNString(4);
+				String get_mem_id = rs.getNString(5);
 				
 
 				vo = new PostVO(get_post_num, get_post_name, get_post_cont, get_post_date, get_mem_id);
@@ -133,7 +133,7 @@ public class PostDAO {
 		try {
 			connection();
 
-			String sql = "select * from POST where POST_NUM = ?";
+			String sql = "select post_num, post_name, post_cont, to_char(post_date, 'YYYY-MM-DD'), mem_id from POST where POST_NUM = ?";
 			psmt = conn.prepareStatement(sql);
 
 			psmt.setString(1, post_num);

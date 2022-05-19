@@ -66,7 +66,7 @@ public class AnswerDAO {
 
 			connection();
 
-			String sql = "insert into answer values(ANSWER_NUM.NEXTVAL,'admin',?,sysdate,?)";
+			String sql = "insert into answer values(ANS_NUM.NEXTVAL,'admin',?,sysdate,?)";
 			psmt = conn.prepareStatement(sql);
 
 			psmt.setString(1, ans_cont);
