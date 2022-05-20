@@ -553,13 +553,13 @@
 	                  			</table>
 	                  				
 	               				<!-- 글쓰기 버튼 -->
-	                  			<div style="text-align: right;"><button onclick="location.href='main.jsp#post_up'">글쓰기</button></div>
+	                  			<div style="text-align: right;"><button onclick="location.href='PostButton'">글쓰기</button></div>
 	         				</article>
 	         
 	         			<!-- Board : 글쓰기 페이지 -->
 	         				<article id= "post_up">
 	         					<h1 class="major">게시판</h1>
-	               				<form method="post" action="writeAction.jsp">
+	               				<form method="post" action="Postup">
 		                  			<table>
 		                        		<tr>
 		                          			<td><input class="form-control" name="post_name" type="text"
@@ -570,8 +570,11 @@
 		                           							style="height: 350px;" required="required"></textarea></td>
 		                        		</tr>
 		                  			</table>
-		                  			<!-- 저장 버튼-->
-		                  			<div style="text-align: right;"><input type="submit" class="btn btn-primary pull-right" value="저장"></div>
+		                  			<!-- 저장, 목록  버튼-->
+		                  			<div style="text-align: right;">
+		                  				<input type="submit" value="저장" >
+		                  				<button type = "button" style="margin-left: 5px;" onclick="location.href='main.jsp#POST'">목록</button>
+		                  			</div>
 	               				</form>
 	         				</article>
 	
@@ -638,7 +641,7 @@
 	                        		</tr>
 	                  			</table>
 	                  			<!-- 글쓰기 버튼 -->
-	                  			<div style="text-align: right;"><input type="submit" class="btn btn-primary pull-right" value="저장"></div>
+	                  			<div style="text-align: right;"><input type="submit" value="저장"></div>
 	               			</form>
 	         			</article>
 	   
@@ -863,6 +866,7 @@
                  }
 	        	
 	        	
+	        	
 	        	/* id 중복 체크 */
 	            function idcheck() {
 	               let input = document.getElementById("input_id");
@@ -951,6 +955,17 @@
 				            }
 					})
 					}
+		        
+		        function PostButton(id){
+		        	alert('진입')
+		        	if(id == null) {
+		        		alert('로그인을 하셔야합니다.')
+		        		location.href = 'main.jsp#Login'
+		        	}else{
+		        		location.href = 'main.jsp'
+		        	}
+		        }
+		        
 	       </script>
 
 	</body>

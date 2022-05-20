@@ -1,6 +1,8 @@
 package com.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,18 +27,22 @@ public class Postup extends HttpServlet {
 	    HttpSession session = request.getSession();
 	    MemberVO vo = (MemberVO)session.getAttribute("member");
 
-	    System.out.println(vo.getid());
-	    
 	    PostDAO dao = new PostDAO();
 	    int cnt = dao.write(post_name, vo.getid(), post_cont);
+	    response.setContentType("text/html; charset=utf-8");
+	    PrintWriter script = response.getWriter();
 	    
-	    if(cnt>0) {
-	         System.out.println("게시글등록성공!");
-	         response.sendRedirect("main.jsp#POST");
-	      }else {
-	         System.out.println("게시글등록실패!");
-	         response.sendRedirect("main.jsp#POST");
-	      }
+	    if(cnt == -1){
+			script.println("<script>");
+			script.println("alert('글쓰기에 실패했습니다')");
+			script.println("history.back()");
+			script.println("</script>");
+		}else {
+			script.println("<script>");
+			script.println("alert('글쓰기 성공')");
+			script.println("location.href='main.jsp#POST'");
+			script.println("</script>");
+	}
 	}
 
 }
