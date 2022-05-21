@@ -1,3 +1,4 @@
+<%@page import="java.io.PrintWriter"%>
 <%@page import="com.model.AnswerDAO"%>
 <%@page import="com.model.AnswerVO"%>
 <%@page import="com.model.QuesVO"%>
@@ -588,7 +589,7 @@
 	                        		</tr>
 	                        		<tr>
 	                           			<td>작성자</td>
-	                           			<td id="post_detail_id" colspan="2"></td>
+	                           			<td id="post_detail_id" colspan="2" ></td>
 	                        		</tr>
 	                        		<tr>
 			                           	<td>작성일자</td>
@@ -599,7 +600,15 @@
 	                           			<td id="post_detail_cont" colspan="2" style="height: 200px; text-align: left;"></td>
 	                        		</tr>
 	                  			</table>
-	                  			<div style="text-align: right;"><button onclick="location.href='main.jsp#POST'">목록</button></div>
+	                  			<div style="text-align: right;">
+	                  				<button onclick="location.href='main.jsp#POST'">목록</button>
+	                  				<%if( vo != null ) {
+	                  					if( vo.getid() != "admin"){%>
+	                  					<input type="submit" value="수정" >
+	                  					<%}%>
+	                  					<input type="submit" value="수정" >
+	                  				<%}%>
+	                  			</div>
 	         				</article>         
 					        
 					         
@@ -955,16 +964,6 @@
 				            }
 					})
 					}
-		        
-		        function PostButton(id){
-		        	alert('진입')
-		        	if(id == null) {
-		        		alert('로그인을 하셔야합니다.')
-		        		location.href = 'main.jsp#Login'
-		        	}else{
-		        		location.href = 'main.jsp'
-		        	}
-		        }
 		        
 	       </script>
 
